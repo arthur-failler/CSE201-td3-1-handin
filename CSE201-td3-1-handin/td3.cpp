@@ -145,6 +145,7 @@ void merge_telemetry(double **telemetries,
                      double* &global_telemetry,
                      int &global_telemetry_current_size,
                      int &global_telemetry_max_size) {
+
   // IMPLEMENT YOUR FUNCTION HERE
     double num = 0;
     for (int i=0; i<tot_telemetries; i++){
@@ -157,9 +158,10 @@ void merge_telemetry(double **telemetries,
     double t;
     double x;
     double y;
+    double l = num;
     bool b = 1;
 
-    while (b != 0) {
+    while (b != 0 and l>1) {
         b = 0;
         for (int i=3; i<num-5; i=i+3) {
             if (global_telemetry[i]>global_telemetry[i+3]) {
