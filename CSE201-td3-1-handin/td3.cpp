@@ -47,10 +47,10 @@ double* append_to_array(double element,
     if (max_size == current_size) {
         max_size += 5;
     }
-    double* narray = extend_array(array, current_size, current_size+1);
-    narray[current_size] = element;
+    array = extend_array(array, current_size, current_size+1);
+    array[current_size] = element;
     current_size += 1;
-    return narray;
+    return array;
 
   return NULL; // YOU CAN CHANGE THIS
 }
@@ -113,31 +113,6 @@ bool simulate_projectile(const double magnitude, const double angle,
 
 }
 
-double *sort(double *targets, const int num_targets) {
-  // IMPLEMENT YOUR CODE HERE
-    double t;
-    double x;
-    double y;
-    double l = num_targets;
-    while (l>1) {
-        for (int i=3; i<num_targets-2; i=i+3) {
-            if (targets[i-3]>targets[i]) {
-                t = targets[i-3];
-                x = targets[i-2];
-                y = targets[i-1];
-                targets[i-3] = targets[i];
-                targets[i-2] = targets[i+1];
-                targets[i-1] = targets[i+2];
-                targets[i] = t;
-                targets[i+1] = x;
-                targets[i+2] = y;
-            }
-    }
-        l = l-3;
-    }
-    return targets;
-}
-
 
 void merge_telemetry(double **telemetries,
                      int tot_telemetries,
@@ -147,23 +122,20 @@ void merge_telemetry(double **telemetries,
                      int &global_telemetry_max_size) {
 
   // IMPLEMENT YOUR FUNCTION HERE
-    double num = 0;
     for (int i=0; i<tot_telemetries; i++){
-        num += telemetries_sizes[i];
-        for (int j=0; j<telemetries_sizes[i]; i++) {
-            append_to_array(telemetries[i][j], global_telemetry, global_telemetry_current_size, global_telemetry_max_size);
+        for (int j=0; j<telemetries_sizes[i]; j++) {
+            global_telemetry = append_to_array(telemetries[i][j], global_telemetry, global_telemetry_current_size, global_telemetry_max_size);
         }
     }
 
     double t;
     double x;
     double y;
-    double l = num;
-    bool b = 1;
+    double b = 1;
 
-    while (b != 0 and l>1) {
+    while (b != 0) {
         b = 0;
-        for (int i=3; i<num-5; i=i+3) {
+        for (int i=0; i<global_telemetry_current_size-5; i=i+3) {
             if (global_telemetry[i]>global_telemetry[i+3]) {
                 t = global_telemetry[i];
                 x = global_telemetry[i+1];
